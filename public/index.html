@@ -3,13 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>real time chat</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <ul id="messages"></ul>
+    <div class="chat">
+      <ul class="messages"></ul>
+      <li class="typing"></li>
+      <form action="">
+        <label for="nickname">nickname: </label>
+        <input name="nickname" id="n" autocomplete="off" />
+        <label for="message">message: </label>
+        <input name="message" id="m" autocomplete="off" />
+        <button>Send</button>
+      </form>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./script.js"></script>
   </body>

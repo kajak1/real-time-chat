@@ -1,0 +1,13 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.messages {
+  font-size: large;
+  padding: 10px 0 0 10px;
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
