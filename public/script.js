@@ -17,7 +17,7 @@ const userTyping = (function () {
     typing = true;
     socket.emit('user typing', { typing: typing });
     clearTimeout(timeout);
-    timeout = setTimeout(typingTimeout, 1000);
+    timeout = setTimeout(typingTimeout, 3000);
   };
 })();
 
@@ -29,16 +29,13 @@ function addTypingInfo({ typing }) {
   }
 }
 
-function removeTypingInfo() {
-  ul.lastChild.parentNode.removeChild(ul.lastChild);
-}
-
 function handleFormSubmission(e) {
   e.preventDefault();
   if (mess.value != '' && nick.value != '') {
     const data = { message: mess.value, author: nick.value };
+    mess.value = '';
     socket.emit('chat message', data);
-    return false;
+    // return false;
   }
 }
 
@@ -49,13 +46,8 @@ function addChatMessage(msg) {
 
 form.addEventListener('submit', handleFormSubmission);
 
-mess.addEventListener('input', () => {
-  userTyping();
-  // socket.emit('user typing');
-});
+mess.addEventListener('input', userTyping);
 
 socket.on('chat message', addChatMessage);
 
 socket.on('user typing', addTypingInfo);
-
-// socket.on('user stopped typing', removeTypingInfo);
