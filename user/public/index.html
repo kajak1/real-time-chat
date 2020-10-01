@@ -14,13 +14,15 @@
       </div>
       <form action="">
         <label for="nickname">nickname: </label>
-        <input name="nickname" id="n" autocomplete="off" />
+        <input name="nickname" id="n" autocomplete="off" disabled />
         <label for="message">message: </label>
         <input name="message" id="m" autocomplete="off" />
         <button>Send</button>
       </form>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./script.js"></script>
+    <div class="rooms">
+      <button class="create-room">create room</button>
+    </div>
+    <script src="./index.js"></script>
   </body>
 </html>

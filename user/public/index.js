@@ -1,3 +1,5 @@
+import io from 'socket.io-client';
+
 const socket = io();
 const form = document.querySelector('form');
 const mess = document.querySelector('#m');
@@ -5,28 +7,42 @@ const nick = document.querySelector('#n');
 const ul = document.querySelector('.messages');
 const typingInfo = document.querySelector('.typing');
 
+const user = {
+  // name: '',
+  // status: '',
+};
+
+function askForName() {
+  user.name = prompt('enter your name');
+  if (user.name != '') {
+    socket.emit('user login', user.name);
+  }
+  nick.value = user.name;
+}
+
 function typingTimeout() {
-  typing = false;
-  socket.emit('user typing', typing);
+  socket.emit('user typing', { isTyping: false });
 }
 
 const userTyping = (function () {
-  let typing = false;
   let timeout = null;
-  return function () {
-    typing = true;
-    socket.emit('user typing', { typing: typing });
+  return function (delay) {
+    socket.emit('user typing', { isTyping: true, user: user.name });
     clearTimeout(timeout);
-    timeout = setTimeout(typingTimeout, 3000);
+    timeout = setTimeout(typingTimeout, delay);
   };
 })();
 
-function addTypingInfo({ typing }) {
-  if (typing) {
-    typingInfo.textContent = 'user is typing';
+function addTypingInfo({ isTyping, user }) {
+  if (isTyping) {
+    typingInfo.textContent = `${user} is typing...`;
   } else {
     typingInfo.textContent = '';
   }
+}
+
+function newUserUpdate() {
+  console.log('new user joined');
 }
 
 function handleFormSubmission(e) {
@@ -42,12 +58,16 @@ function handleFormSubmission(e) {
 function addChatMessage(msg) {
   const { message, author } = msg;
   ul.innerHTML += `<li>${author}: ${message}</li>`;
+  typingInfo.textContent = '';
 }
 
-form.addEventListener('submit', handleFormSubmission);
+askForName();
 
-mess.addEventListener('input', userTyping);
+form.addEventListener('submit', handleFormSubmission);
+mess.addEventListener('input', () => {
+  userTyping(1500);
+});
 
 socket.on('chat message', addChatMessage);
-
 socket.on('user typing', addTypingInfo);
+socket.on('new user', newUserUpdate);
