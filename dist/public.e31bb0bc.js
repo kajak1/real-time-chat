@@ -9976,17 +9976,15 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import chat from '../chat';
-// chat();
 var socket = (0, _socket.default)();
 var form = document.querySelector('form');
 var mess = document.querySelector('#m');
 var nick = document.querySelector('#n');
-var ul = document.querySelector('.messages');
+var messageList = document.querySelector('.messages');
 var typingInfo = document.querySelector('.typing');
-var user = {
-  name: '',
-  status: ''
+var usersList = document.querySelector('.users-list');
+var user = {// name: '',
+  // status: '',
 };
 
 function askForName() {
@@ -10000,17 +9998,16 @@ function askForName() {
 }
 
 function typingTimeout() {
-  typing = false;
-  socket.emit('user typing', typing);
+  socket.emit('user typing', {
+    isTyping: false
+  });
 }
 
 var userTyping = function () {
-  var typing = false;
   var timeout = null;
   return function (delay) {
-    typing = true;
     socket.emit('user typing', {
-      typing: typing,
+      isTyping: true,
       user: user.name
     });
     clearTimeout(timeout);
@@ -10019,17 +10016,26 @@ var userTyping = function () {
 }();
 
 function addTypingInfo(_ref) {
-  var typing = _ref.typing,
+  var isTyping = _ref.isTyping,
       user = _ref.user;
 
-  if (typing) {
+  if (isTyping) {
     typingInfo.textContent = "".concat(user, " is typing...");
   } else {
     typingInfo.textContent = '';
   }
 }
 
-function newUserUpdate() {
+function newUserUpdate(users) {
+  console.log(users);
+  var p = '';
+
+  for (var key in users) {
+    p += "<li>".concat(users[key], "</li>");
+  }
+
+  usersList.innerHTML = p; // usersList.innerHTML += `<li>${user}</li>`;
+
   console.log('new user joined');
 }
 
@@ -10049,7 +10055,7 @@ function handleFormSubmission(e) {
 function addChatMessage(msg) {
   var message = msg.message,
       author = msg.author;
-  ul.innerHTML += "<li>".concat(author, ": ").concat(message, "</li>");
+  messageList.innerHTML += "<li>".concat(author, ": ").concat(message, "</li>");
   typingInfo.textContent = '';
 }
 
@@ -10089,7 +10095,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63859" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51159" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

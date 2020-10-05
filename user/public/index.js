@@ -1,16 +1,16 @@
 import io from 'socket.io-client';
+import List from '../List';
 
 const socket = io();
 const form = document.querySelector('form');
 const mess = document.querySelector('#m');
 const nick = document.querySelector('#n');
-const ul = document.querySelector('.messages');
+const messageList = document.querySelector('.messages');
 const typingInfo = document.querySelector('.typing');
 
-const user = {
-  // name: '',
-  // status: '',
-};
+const usersList = new List();
+
+const user = {};
 
 function askForName() {
   user.name = prompt('enter your name');
@@ -41,33 +41,50 @@ function addTypingInfo({ isTyping, user }) {
   }
 }
 
-function newUserUpdate() {
+function addUserToList(user) {
+  console.log(user);
+  // let p = '';
+  // for (const key in users) {
+  //   p += `<li id="${users[key]}">${users[key]}</li>`;
+  // }
+  usersList.innerHTML += `<li id="${user}">${user}</li>`;
+  // usersList.innerHTML += `<li>${user}</li>`;
   console.log('new user joined');
 }
 
 function handleFormSubmission(e) {
   e.preventDefault();
   if (mess.value != '' && nick.value != '') {
-    const data = { message: mess.value, author: nick.value };
+    const data = {
+      message: mess.value,
+      author: nick.value,
+      html: `<li>${nick.value}: ${mess.value}</li>`,
+    };
     mess.value = '';
-    socket.emit('chat message', data);
+    socket.emit('chat new message', data);
     // return false;
   }
 }
 
 function addChatMessage(msg) {
-  const { message, author } = msg;
-  ul.innerHTML += `<li>${author}: ${message}</li>`;
+  // console.log(JSON.stringify(msg));
+  messageList.innerHTML = msg;
   typingInfo.textContent = '';
+}
+
+function removeUserFromList(user) {
+  const userTag = document.querySelector(`#${user}`);
+  userTag.parentNode.removeChild(userTag);
 }
 
 askForName();
 
 form.addEventListener('submit', handleFormSubmission);
 mess.addEventListener('input', () => {
-  userTyping(1500);
+  userTyping(2500);
 });
 
-socket.on('chat message', addChatMessage);
+socket.on('chat new message', addChatMessage);
 socket.on('user typing', addTypingInfo);
-socket.on('new user', newUserUpdate);
+socket.on('new user', usersList.addUser.bind(usersList));
+socket.on('remove user', usersList.removeUser.bind(usersList));
