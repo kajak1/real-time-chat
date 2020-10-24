@@ -3,7 +3,7 @@ module.exports = class Messages {
     this.allMsg = '';
   }
 
-  add(msg) {
-    this.allMsg += msg;
+  add(html) {
+    this.allMsg += html;
   }
 };

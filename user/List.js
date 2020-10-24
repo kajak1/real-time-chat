@@ -11,16 +11,19 @@ export default class UsersList {
   }
 
   addUser({ users, user }) {
+    console.log(users, user);
     this.users.push(user);
     for (const key in users) {
-      this.html += `<li id="${users[key]}">${users[key]}</li>`;
+      this.html += `<li id="${users[key].username}">${users[key].username}</li>`;
     }
     this.render();
   }
 
-  removeUser(user) {
+  removeUser(username) {
+    console.log(username);
     console.log(this.list);
-    const toRemove = this.list.querySelector(`#${user}`);
+    const toRemove = this.list.querySelector(`#${username}`);
+    console.log(toRemove);
     toRemove.parentNode.removeChild(toRemove);
   }
 }
