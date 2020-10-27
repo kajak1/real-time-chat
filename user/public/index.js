@@ -23,7 +23,6 @@ function askForName() {
   }
   user.name = username;
   user.rooms.push('global');
-  // console.log(user);
   nick.value = username;
 }
 
@@ -64,6 +63,8 @@ function addTypingInfo({ isTyping, user: { name } }) {
   }
 }
 
+function updateRoomList() {}
+
 function handleFormSubmission(e) {
   e.preventDefault();
   if (mess.value != '' && nick.value != '') {
@@ -93,3 +94,4 @@ socket.on('chat new message', addChatMessage);
 socket.on('user typing', addTypingInfo);
 socket.on('new user', usersList.addUser.bind(usersList));
 socket.on('remove user', usersList.removeUser.bind(usersList));
+socket.on('list room update', updateRoomList);
