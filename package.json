@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "parcel user/public/index.html",
+    "dev": "parcel watch user/public/index.html",
     "build": "parcel build user/public/index.html",
-    "server": "parcel build user/public/index.html && nodemon server/server.js"
+    "server": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
