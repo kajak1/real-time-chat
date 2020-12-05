@@ -1,3 +1,7 @@
-export default function () {
-  console.log('czat');
-}
+import React from 'react';
+
+const Chat = () => {
+  return <h1>test</h1>;
+};
+
+export default Chat;
