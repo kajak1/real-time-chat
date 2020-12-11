@@ -9,7 +9,7 @@ export default class UsersList {
     this.list.innerHTML = this.html;
     this.html = '';
   }
-
+//aa
   addUser({ users, user }) {
     console.log(users, user);
     this.users.push(user);
