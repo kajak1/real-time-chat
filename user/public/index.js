@@ -69,8 +69,8 @@ function handleFormSubmission(e) {
   e.preventDefault();
   if (mess.value != '' && nick.value != '') {
     const data = {
-      message: mess.value,
       user: user,
+      message: mess.value,
       html: `<li>${user.name}: ${mess.value}</li>`,
     };
     mess.value = '';

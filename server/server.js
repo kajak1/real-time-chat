@@ -9,36 +9,36 @@ app.use(express.static('dist'));
 
 const messages = new Messages();
 const users = {};
-const rooms = {
-  global,
-};
 
 io.on('connection', (socket) => {
   socket.on('user login', ({ username }) => {
     users[socket.id] = { username: username };
-    socket.join('global');
-    rooms.global[socket.id] = { username: username };
+    // socket.join('global');
+    // rooms.global[socket.id] = { username: username };
     console.log(`${username} joined global room`);
     console.log(users);
+    socket.emit('startup', {allMsg: messages.allMsg})
     io.to('global').emit('new user', { users: users, user: users[socket.id] });
+    // socket.broadcast.emit('new user', { users: users, user: users[socket.id] });
   });
 
-  socket.on('user typing', (data) => {
-    const targetRoom = data.user.activeRoom;
-    io.to(`${targetRoom}`).emit('user typing', data);
+  socket.on('user typing', ({isTyping}) => {
+    const username = users[socket.id].username;
+    console.log(username);
+    socket.broadcast.emit('user typing', {isTyping, username});
   });
 
-  socket.on('chat new message', ({ html, user }) => {
-    messages.add(html);
-    io.to(user.rooms[0]).emit('chat new message', {
+  socket.on('chat new message', ({ message }) => {
+    messages.add([users[socket.id].username, message]);
+    io.emit('chat new message', { allMsg: messages.allMsg });
+    /*io.to(user.rooms[0]).emit('chat new message', {
       allMsg: messages.allMsg,
-      user: user.name,
+      // user: user.name,
     });
+    */
   });
 
   socket.on('disconnect', () => {
-    console.log(users);
-    // aa
     if (Object.keys(users).length != 0) {
       console.log(`${users[socket.id].username} disconnected`);
       io.emit('remove user', users[socket.id].username);

@@ -1,9 +1,10 @@
 module.exports = class Messages {
   constructor() {
-    this.allMsg = '';
+    this.allMsg = [];
   }
 
-  add(html) {
-    this.allMsg += html;
+  add(data) {
+    this.allMsg.push(data);
+    console.log(this.allMsg);
   }
 };
