@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
-// eslint-disable-next-line
-import typingDelay, {typingTimeout} from '../utils/typingDelay' 
+import typingDelay, { typingTimeout } from '../utils/typingDelay';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -10,9 +9,11 @@ const Chat = () => {
   const [typingUser, setTypingUser] = useState([]);
   const [user] = useContext(UserContext);
 
-  socket.on('chat new message', ({ allMsg }) => setMessages(allMsg));
-  socket.on('startup', ({allMsg}) => setMessages(allMsg))
-  socket.on('user typing', ({isTyping, username}) => setTypingUser([isTyping, username]))
+  socket.on('chat update', ({ allMsg }) => setMessages(allMsg));
+  socket.on('startup', ({ allMsg }) => setMessages(allMsg));
+  socket.on('user typing', ({ isTyping, username }) =>
+    setTypingUser([isTyping, username])
+  );
 
   return (
     <div className='chat'>
@@ -25,20 +26,14 @@ const Chat = () => {
           ))}
         </ul>
         <ul className='typing-cont'>
-          {
-            typingUser[0] ? (
-              <li>{typingUser[1]}: is typing...</li>
-            ) : (
-              <li></li>
-            )
-          }
+          {typingUser[0] ? <li>{typingUser[1]}: is typing...</li> : <li></li>}
         </ul>
       </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          socket.emit('chat new message', { message });
-          socket.emit('user typing', {isTyping: false});
+          socket.emit('chat update', { message });
+          socket.emit('user typing', { isTyping: false });
           setMessage('');
         }}>
         <label htmlFor='nickname'>nickname: </label>
@@ -57,7 +52,6 @@ const Chat = () => {
           onChange={(e) => {
             setMessage(e.target.value);
             typingDelay(4000);
-
           }}
           autoComplete='off'
         />

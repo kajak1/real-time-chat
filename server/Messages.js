@@ -3,8 +3,8 @@ module.exports = class Messages {
     this.allMsg = [];
   }
 
-  add(data) {
-    this.allMsg.push(data);
-    console.log(this.allMsg);
+  add({ username, message }) {
+    this.allMsg.push([username, message]);
+    // console.log(this.allMsg);
   }
 };
