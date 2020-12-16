@@ -36,14 +36,14 @@ const Chat = () => {
           socket.emit('user typing', { isTyping: false });
           setMessage('');
         }}>
-        <label htmlFor='nickname'>nickname: </label>
+        {/* <label htmlFor='nickname'>nickname: </label>
         <input
           name='nickname'
           value={user.username}
           id='n'
           autoComplete='off'
           disabled
-        />
+        /> */}
         <label htmlFor='message'>message: </label>
         <input
           name='message'

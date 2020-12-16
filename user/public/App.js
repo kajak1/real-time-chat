@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import Chat from '../components/Chat';
-import List from '../components/List';
-import RoomDropdown from '../components/RoomDropdown';
+import UsersList from '../components/UsersList';
+import RoomsList from '../components/RoomList';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
 
@@ -13,9 +13,10 @@ const App = () => {
   socket.emit('user login', { username });
   return (
     <UserContext.Provider value={userHook}>
+      <header>Logged as {username}</header>
       <Chat />
-      <List />
-      <RoomDropdown />
+      <UsersList />
+      <RoomsList />
     </UserContext.Provider>
   );
 };

@@ -42,6 +42,11 @@ io.on('connection', (socket) => {
     io.emit('chat update', { allMsg: messages.allMsg });
   });
 
+  socket.on('create room', ({ roomName }) => {
+    rooms.add(roomName);
+    io.to('global').emit('rooms update', { rooms: rooms.getAllRooms() });
+  });
+
   socket.on('disconnect', () => {
     if (Object.keys(users.allUsers).length != 0) {
       console.log(`${socket.id} disconnected`);
