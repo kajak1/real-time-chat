@@ -42,9 +42,19 @@ io.on('connection', (socket) => {
     io.emit('chat update', { allMsg: messages.allMsg });
   });
 
+  socket.on('join room', ({ roomName }) => {
+    users.changeRoom(socket.id, roomName);
+    console.log('xddd', users.allUsers[socket.id]);
+  });
+
   socket.on('create room', ({ roomName }) => {
     rooms.add(roomName);
     io.to('global').emit('rooms update', { rooms: rooms.getAllRooms() });
+  });
+
+  socket.on('delete room', ({ roomName }) => {
+    rooms.delete(roomName);
+    io.emit('rooms update', { rooms: rooms.getAllRooms() });
   });
 
   socket.on('disconnect', () => {

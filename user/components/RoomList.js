@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import socket from '../utils/socketConfig';
+import Room from './Room';
 
 const RoomDropdown = () => {
   const [rooms, setRooms] = useState([]);
@@ -16,13 +17,15 @@ const RoomDropdown = () => {
     <div>
       <ul>
         {rooms.map((room, index) => (
-          <li key={index}>{room}</li>
+          <Room name={room} key={index} />
         ))}
       </ul>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          socket.emit('create room', { roomName });
+          if (roomName != '') {
+            socket.emit('create room', { roomName });
+          }
           setRoomName('');
         }}>
         <label htmlFor='room-name'>
