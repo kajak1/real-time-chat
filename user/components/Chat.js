@@ -9,7 +9,14 @@ const Chat = () => {
   const [typingUser, setTypingUser] = useState([]);
   const [user] = useContext(UserContext);
 
-  socket.on('chat update', ({ allMsg }) => setMessages(allMsg));
+  let count = 0;
+
+  socket.on('chat update', ({ allMsg }) => {
+    setMessages(allMsg);
+    // count += 1;
+    // console.log(count);
+    // console.log(messages, count);
+  });
   socket.on('startup', ({ allMsg }) => setMessages(allMsg));
   socket.on('user typing', ({ isTyping, username }) =>
     setTypingUser([isTyping, username])

@@ -3,13 +3,11 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = 9999;
-const Messages = require('./Messages');
 const Users = require('./Users');
 const Rooms = require('./Rooms');
 
 app.use(express.static('dist'));
 
-const messages = new Messages();
 const users = new Users();
 const rooms = new Rooms();
 
@@ -21,7 +19,7 @@ io.on('connection', (socket) => {
     console.log(`${socket.id} joined global room`);
 
     socket.emit('startup', {
-      allMsg: messages.allMsg,
+      allMsg: rooms.global.messages,
       users: rooms.global.users,
       rooms: rooms.getAllRooms(),
     });
@@ -33,23 +31,35 @@ io.on('connection', (socket) => {
 
   socket.on('user typing', ({ isTyping }) => {
     const username = users.allUsers[socket.id].username;
-    socket.broadcast.emit('user typing', { isTyping, username });
+    const activeRoom = users.allUsers[socket.id].activeRoom;
+    socket.to(activeRoom).broadcast.emit('user typing', { isTyping, username });
   });
 
   socket.on('chat update', ({ message }) => {
     const username = users.allUsers[socket.id].username;
-    messages.add({ username, message });
-    io.emit('chat update', { allMsg: messages.allMsg });
+    const activeRoom = users.allUsers[socket.id].activeRoom;
+    rooms.addMessage({ username, message }, activeRoom);
+    io.to(activeRoom).emit('chat update', {
+      allMsg: rooms[activeRoom].messages,
+    });
   });
 
   socket.on('join room', ({ roomName }) => {
+    socket.join(roomName);
     users.changeRoom(socket.id, roomName);
-    console.log('xddd', users.allUsers[socket.id]);
+    rooms.addUser(socket.id, roomName);
+    socket.emit('startup', {
+      allMsg: rooms[roomName].messages,
+      users: rooms[roomName].users,
+      rooms: rooms.getAllRooms(),
+    });
+
+    // console.log('xddd', users.allUsers[socket.id]);
   });
 
   socket.on('create room', ({ roomName }) => {
     rooms.add(roomName);
-    io.to('global').emit('rooms update', { rooms: rooms.getAllRooms() });
+    io.emit('rooms update', { rooms: rooms.getAllRooms() });
   });
 
   socket.on('delete room', ({ roomName }) => {

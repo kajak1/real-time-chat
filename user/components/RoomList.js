@@ -17,7 +17,7 @@ const RoomDropdown = () => {
     <div>
       <ul>
         {rooms.map((room, index) => (
-          <Room name={room} key={index} />
+          <Room roomName={room} key={index} />
         ))}
       </ul>
       <form

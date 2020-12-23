@@ -10,18 +10,13 @@ module.exports = class Users {
     };
   }
 
-  changeRoom(socketID, room) {
-    this.allUsers[socketID].activeRoom = room;
+  changeRoom(socketID, roomName) {
+    this.allUsers[socketID].activeRoom = roomName;
   }
 
   remove(socketID) {
-    console.log(this.allUsers[socketID]);
+    // console.log(this.allUsers[socketID]);
     // const username = this.allUsers[socketID].username;
     delete this.allUsers[socketID];
-    /*
-        if (this.global.indexOf(username) > -1) {
-      this.global.splice(this.global.indexOf(username), 1);
-    }
-    */
   }
 };

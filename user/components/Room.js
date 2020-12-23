@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import socket from '../utils/socketConfig';
 import UserContext from '../utils/UserContext';
 
-export default function Room({ name }) {
+export default function Room({ roomName }) {
   const [userInfo, setUserInfo] = useContext(UserContext);
 
   return (
     <li>
-      {name}
+      {roomName}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -15,14 +15,19 @@ export default function Room({ name }) {
         <button
           type='submit'
           onClick={() => {
+            if (roomName === userInfo.activeRoom) return;
             const tmpName = userInfo.username;
-            setUserInfo({ username: tmpName, activeRoom: name });
+            setUserInfo({ username: tmpName, activeRoom: roomName });
             // socket.emit('user update', userInfo);
-            socket.emit('join room', { roomName: name });
+            socket.emit('join room', { roomName: roomName });
           }}>
           join
         </button>
-        <button onClick={() => socket.emit('delete room', { roomName: name })}>
+        <button
+          onClick={() => {
+            if (roomName === 'global') return;
+            socket.emit('delete room', { roomName: roomName });
+          }}>
           delete
         </button>
       </form>

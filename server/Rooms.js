@@ -2,13 +2,20 @@ module.exports = class Rooms {
   constructor() {
     this.global = {
       users: [],
+      messages: [],
     };
   }
 
   add(roomName) {
     this[roomName] = {
       users: [],
+      messages: [],
     };
+  }
+
+  addMessage({ username, message }, roomName) {
+    this[roomName].messages.push([username, message]);
+    // console.log('dostalem message', message, 'do pokoju', roomName);
   }
 
   addUser(socketID, roomName) {
@@ -16,6 +23,10 @@ module.exports = class Rooms {
   }
 
   delete(roomName) {
+    // console.log(roomName);
+    if (this[roomName].users.length > 0) {
+      return;
+    }
     delete this[roomName];
   }
 
