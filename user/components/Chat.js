@@ -9,14 +9,9 @@ const Chat = () => {
   const [typingUser, setTypingUser] = useState([]);
   const [user] = useContext(UserContext);
 
-  let count = 0;
-
   useEffect(() => {
     socket.on('chat update', ({ allMsg }) => {
       setMessages(allMsg);
-      // count += 1;
-      // console.log(count);
-      // console.log(messages, count);
     });
     socket.on('startup', ({ allMsg }) => setMessages(allMsg));
     socket.on('user typing', ({ isTyping, username }) =>
@@ -40,10 +35,12 @@ const Chat = () => {
       </div>
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          socket.emit('chat update', { message });
-          socket.emit('user typing', { isTyping: false });
-          setMessage('');
+          if (message != '') {
+            e.preventDefault();
+            socket.emit('chat update', { message });
+            socket.emit('user typing', { isTyping: false });
+            setMessage('');
+          }
         }}>
         <label htmlFor='nickname'>nickname: </label>
         <input
