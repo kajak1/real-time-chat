@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
 import typingDelay, { typingTimeout } from '../utils/typingDelay';
@@ -11,16 +11,18 @@ const Chat = () => {
 
   let count = 0;
 
-  socket.on('chat update', ({ allMsg }) => {
-    setMessages(allMsg);
-    // count += 1;
-    // console.log(count);
-    // console.log(messages, count);
-  });
-  socket.on('startup', ({ allMsg }) => setMessages(allMsg));
-  socket.on('user typing', ({ isTyping, username }) =>
-    setTypingUser([isTyping, username])
-  );
+  useEffect(() => {
+    socket.on('chat update', ({ allMsg }) => {
+      setMessages(allMsg);
+      // count += 1;
+      // console.log(count);
+      // console.log(messages, count);
+    });
+    socket.on('startup', ({ allMsg }) => setMessages(allMsg));
+    socket.on('user typing', ({ isTyping, username }) =>
+      setTypingUser([isTyping, username])
+    );
+  }, []);
 
   return (
     <div className='chat'>

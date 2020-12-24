@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from '../utils/socketConfig';
 import Room from './Room';
 
 const RoomDropdown = () => {
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState('');
-  socket.on('startup', ({ rooms }) => {
-    setRooms(rooms);
-  });
-  socket.on('rooms update', ({ rooms }) => {
-    // console.log(rooms);
-    setRooms(rooms);
-  });
+
+  useEffect(() => {
+    socket.on('startup', ({ rooms }) => {
+      setRooms(rooms);
+    });
+    socket.on('rooms update', ({ rooms }) => {
+      // console.log(rooms);
+      setRooms(rooms);
+    });
+  }, []);
 
   return (
     <div>
