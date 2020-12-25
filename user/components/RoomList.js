@@ -25,9 +25,10 @@ const RoomDropdown = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (roomName != '') {
-            socket.emit('create room', { roomName });
+          if (/\W+/.test(roomName)) {
+            return;
           }
+          socket.emit('create room', { roomName });
           setRoomName('');
         }}>
         <label htmlFor='room-name'>
