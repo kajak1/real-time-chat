@@ -1,22 +1,18 @@
 module.exports = class Users {
-  constructor() {
-    this.allUsers = {};
-  }
+  constructor() {}
 
   add(socketID, username) {
-    this.allUsers[socketID] = {
+    this[socketID] = {
       username: username,
       activeRoom: 'global',
     };
   }
 
   changeRoom(socketID, roomName) {
-    this.allUsers[socketID].activeRoom = roomName;
+    this[socketID].activeRoom = roomName;
   }
 
   remove(socketID) {
-    // console.log(this.allUsers[socketID]);
-    // const username = this.allUsers[socketID].username;
-    delete this.allUsers[socketID];
+    delete this[socketID];
   }
 };

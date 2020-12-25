@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
+// eslint-disable-next-line
 import typingDelay, { typingTimeout } from '../utils/typingDelay';
 
 const Chat = () => {

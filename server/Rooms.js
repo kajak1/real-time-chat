@@ -15,15 +15,16 @@ module.exports = class Rooms {
 
   addMessage({ username, message }, roomName) {
     this[roomName].messages.push([username, message]);
-    // console.log('dostalem message', message, 'do pokoju', roomName);
   }
 
   addUser(socketID, roomName) {
-    this[roomName].users.push(socketID);
+    const userIndex = this[roomName].users.indexOf(socketID);
+    if (userIndex === -1) {
+      this[roomName].users.push(socketID);
+    }
   }
 
   delete(roomName) {
-    // console.log(roomName);
     if (this[roomName].users.length > 0) {
       return;
     }

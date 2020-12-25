@@ -18,8 +18,10 @@ export default function Room({ roomName }) {
             if (roomName === userInfo.activeRoom) return;
             const tmpName = userInfo.username;
             setUserInfo({ username: tmpName, activeRoom: roomName });
-            // socket.emit('user update', userInfo);
-            socket.emit('join room', { roomName: roomName });
+            socket.emit('join room', {
+              roomName: roomName,
+              activeRoomName: userInfo.activeRoom,
+            });
           }}>
           join
         </button>

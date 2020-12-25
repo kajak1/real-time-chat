@@ -24,37 +24,52 @@ io.on('connection', (socket) => {
       rooms: rooms.getAllRooms(),
     });
 
-    socket.broadcast.to('global').emit('users update', {
+    socket.to('global').broadcast.emit('users update', {
       users: rooms.global.users,
     });
   });
 
   socket.on('user typing', ({ isTyping }) => {
-    const username = users.allUsers[socket.id].username;
-    const activeRoom = users.allUsers[socket.id].activeRoom;
+    const username = users[socket.id].username;
+    const activeRoom = users[socket.id].activeRoom;
     socket.to(activeRoom).broadcast.emit('user typing', { isTyping, username });
   });
 
   socket.on('chat update', ({ message }) => {
-    const username = users.allUsers[socket.id].username;
-    const activeRoom = users.allUsers[socket.id].activeRoom;
+    const username = users[socket.id].username;
+    const activeRoom = users[socket.id].activeRoom;
     rooms.addMessage({ username, message }, activeRoom);
     io.to(activeRoom).emit('chat update', {
       allMsg: rooms[activeRoom].messages,
     });
   });
 
-  socket.on('join room', ({ roomName }) => {
+  socket.on('join room', ({ roomName, activeRoomName }) => {
+    socket.leave(users[socket.id].activeRoom);
     socket.join(roomName);
     users.changeRoom(socket.id, roomName);
+    rooms.removeUserFromRoom(socket.id, activeRoomName);
     rooms.addUser(socket.id, roomName);
+
+    console.log(activeRoomName, rooms[activeRoomName].users);
+    console.log(roomName, rooms[roomName].users);
+
+    // to new room
+    socket.to(activeRoomName).broadcast.emit('users update', {
+      users: rooms[activeRoomName].users,
+    });
+
+    // to prev room
+    socket.to(roomName).broadcast.emit('users update', {
+      users: rooms[roomName].users,
+    });
+
+    // get all info in new room
     socket.emit('startup', {
       allMsg: rooms[roomName].messages,
       users: rooms[roomName].users,
       rooms: rooms.getAllRooms(),
     });
-
-    // console.log('xddd', users.allUsers[socket.id]);
   });
 
   socket.on('create room', ({ roomName }) => {
@@ -68,7 +83,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    if (Object.keys(users.allUsers).length != 0) {
+    if (Object.keys(users).length != 0) {
       console.log(`${socket.id} disconnected`);
     }
     users.remove(socket.id);

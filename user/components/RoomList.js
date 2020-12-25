@@ -11,7 +11,6 @@ const RoomDropdown = () => {
       setRooms(rooms);
     });
     socket.on('rooms update', ({ rooms }) => {
-      // console.log(rooms);
       setRooms(rooms);
     });
   }, []);
