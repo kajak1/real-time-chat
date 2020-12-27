@@ -18,6 +18,33 @@
   width: 100%;
 }
 
+.wrapper {
+  position: relative;
+}
+
+.wrapper .input-label {
+  position: absolute;
+  left: 0;
+  color: blue;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.wrapper input {
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.wrapper input:focus, .wrapper input:valid {
+  outline: none;
+}
+
+.wrapper input:focus + .input-label, .wrapper input:valid + .input-label {
+  -webkit-transform: translateY(-0.8em);
+          transform: translateY(-0.8em);
+  font-size: 10px;
+}
+
 .chat {
   border: 1px solid black;
   display: -webkit-box;

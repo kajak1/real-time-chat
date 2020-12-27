@@ -32,16 +32,21 @@ const RoomDropdown = () => {
           socket.emit('create room', { roomName });
           setRoomName('');
         }}>
-        <label htmlFor='room-name'>
+        <div className='wrapper'>
           <input
+            name='room-name'
             type='text'
             value={roomName}
             onChange={(e) => {
               setRoomName(e.target.value);
             }}
+            autoComplete='off'
+            required
           />
-          room name
-        </label>
+          <label className='input-label' htmlFor='room-name'>
+            room name
+          </label>
+        </div>
         <button type='submit'>Create Room</button>
       </form>
     </div>
