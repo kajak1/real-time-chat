@@ -20,9 +20,9 @@ const App = () => {
       <header>
         Logged as {userHook[0].username}, active room: {userHook[0].activeRoom}
       </header>
+      <RoomsList />
       <Chat />
       <UsersList />
-      <RoomsList />
     </UserContext.Provider>
   );
 };

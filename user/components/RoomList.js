@@ -16,13 +16,14 @@ const RoomDropdown = () => {
   }, []);
 
   return (
-    <div>
+    <div className='rooms-list-cont'>
       <ul>
         {rooms.map((room, index) => (
           <Room roomName={room} key={index} />
         ))}
       </ul>
       <form
+        className='create-room-form'
         onSubmit={(e) => {
           e.preventDefault();
           if (/\W+/.test(roomName)) {

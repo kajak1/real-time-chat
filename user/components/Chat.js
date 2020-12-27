@@ -36,8 +36,8 @@ const Chat = () => {
       </div>
       <form
         onSubmit={(e) => {
+          e.preventDefault();
           if (message != '') {
-            e.preventDefault();
             socket.emit('chat update', { message });
             socket.emit('user typing', { isTyping: false });
             setMessage('');

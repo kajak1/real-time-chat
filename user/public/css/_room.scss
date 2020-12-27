@@ -1,0 +1,14 @@
+.rooms-list-cont {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid black;
+  width: 20%;
+  max-height: 50%;
+}
+
+.create-room-form {
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+}

@@ -1,0 +1,19 @@
+.chat {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  height: 70%;
+}
+
+.messages-cont {
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.messages {
+  font-size: large;
+  padding: 10px 0 0 10px;
+}
