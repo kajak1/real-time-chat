@@ -5,6 +5,15 @@
   border: 1px solid black;
   width: 20%;
   max-height: 50%;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
 
 .create-room-form {
@@ -19,8 +28,8 @@
   .input-label {
     position: absolute;
     left: 0;
-    color: blue;
     transition: all 0.2s ease;
+    cursor: text;
   }
 
   input {
