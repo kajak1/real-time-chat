@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import socket from '../utils/socketConfig';
-import UserContext from '../utils/UserContext';
+import socket from '../../utils/socketConfig';
+import UserContext from '../../utils/UserContext';
 
 export default function Room({ roomName }) {
   const [userInfo, setUserInfo] = useContext(UserContext);

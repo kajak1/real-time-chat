@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../utils/UserContext';
-import socket from '../utils/socketConfig';
+import UserContext from '../../utils/UserContext';
+import socket from '../../utils/socketConfig';
 // eslint-disable-next-line
-import typingDelay, { typingTimeout } from '../utils/typingDelay';
+import typingDelay, { typingTimeout } from '../../utils/typingDelay';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import socket from '../utils/socketConfig';
+import socket from '../../utils/socketConfig';
 
 const List = () => {
   const [users, setUsers] = useState([]);

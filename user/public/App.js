@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { render } from 'react-dom';
-import Chat from '../components/Chat';
-import UsersList from '../components/UsersList';
-import RoomsList from '../components/RoomList';
+import Desktop from '../components/Desktop';
+import Mobile from '../components/Mobile';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
 
@@ -11,18 +11,20 @@ const App = () => {
   const username = 'imie';
   const userHook = useState({ username: username, activeRoom: 'global' });
 
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 1024px)',
+  });
+
+  const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+
   useEffect(() => {
     socket.emit('user login', { username });
   }, []);
 
   return (
     <UserContext.Provider value={userHook}>
-      <header>
-        Logged as {userHook[0].username}, active room: {userHook[0].activeRoom}
-      </header>
-      <RoomsList />
-      <Chat />
-      <UsersList />
+      {isDesktop && <Desktop></Desktop>}
+      {isMobile && <Mobile></Mobile>}
     </UserContext.Provider>
   );
 };
