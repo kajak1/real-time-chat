@@ -7,10 +7,12 @@ module.exports = class Rooms {
   }
 
   add(roomName) {
-    this[roomName] = {
-      users: [],
-      messages: [],
-    };
+    if (isNaN(roomName[0])) {
+      this[roomName] = {
+        users: [],
+        messages: [],
+      };
+    }
   }
 
   addMessage({ username, message }, roomName) {
@@ -38,6 +40,8 @@ module.exports = class Rooms {
   }
 
   getAllRooms() {
+    console.log(Object.getOwnPropertyNames(this));
+    console.log(this);
     return Object.getOwnPropertyNames(this);
   }
 };
