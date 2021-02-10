@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "parcel watch user/public/index.html",
-    "xd": "parcel user/public/index.html",
     "build": "parcel build user/public/index.html",
     "server": "nodemon server/server.js"
   },
@@ -28,6 +27,7 @@
     "reach-router": "^0.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-responsive": "^8.2.0",
     "room": "^0.0.4",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0"
