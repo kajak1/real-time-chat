@@ -7,6 +7,10 @@ const List = () => {
   useEffect(() => {
     socket.on('startup', ({ users }) => setUsers(users));
     socket.on('users update', ({ users }) => setUsers(users));
+
+    return () => {
+      socket.close();
+    };
   }, []);
 
   return (

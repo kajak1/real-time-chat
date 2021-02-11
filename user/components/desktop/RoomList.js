@@ -13,6 +13,10 @@ const RoomDropdown = () => {
     socket.on('rooms update', ({ rooms }) => {
       setRooms(rooms);
     });
+
+    return () => {
+      socket.close();
+    };
   }, []);
 
   return (

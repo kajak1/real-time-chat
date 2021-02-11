@@ -18,6 +18,10 @@ const Chat = () => {
     socket.on('user typing', ({ isTyping, username }) =>
       setTypingUser([isTyping, username])
     );
+
+    return () => {
+      socket.close();
+    };
   }, []);
 
   return (
