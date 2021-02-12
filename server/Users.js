@@ -15,4 +15,9 @@ module.exports = class Users {
   remove(socketID) {
     delete this[socketID];
   }
+
+  getAllUsers() {
+    // console.log(Object.getOwnPropertyNames(this));
+    return Object.getOwnPropertyNames(this);
+  }
 };
