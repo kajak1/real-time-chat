@@ -9,7 +9,8 @@ const List = () => {
     socket.on('users update', ({ users }) => setUsers(users));
 
     return () => {
-      socket.close();
+      socket.off('startup');
+      socket.off('users update');
     };
   }, []);
 

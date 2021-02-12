@@ -7,6 +7,8 @@ const RoomDropdown = () => {
   const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
+    // socket.emit('get startup', { roomName: user.activeRoom });
+
     socket.on('startup', ({ rooms }) => {
       setRooms(rooms);
     });
@@ -15,7 +17,8 @@ const RoomDropdown = () => {
     });
 
     return () => {
-      socket.close();
+      socket.off('startup');
+      socket.off('room update');
     };
   }, []);
 

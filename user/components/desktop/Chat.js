@@ -11,16 +11,16 @@ const Chat = () => {
   const [user] = useContext(UserContext);
 
   useEffect(() => {
-    socket.on('chat update', ({ allMsg }) => {
-      setMessages(allMsg);
-    });
+    socket.on('chat update', ({ allMsg }) => setMessages(allMsg));
     socket.on('startup', ({ allMsg }) => setMessages(allMsg));
     socket.on('user typing', ({ isTyping, username }) =>
       setTypingUser([isTyping, username])
     );
 
     return () => {
-      socket.close();
+      socket.off('chat update');
+      socket.off('startup');
+      socket.off('user typing');
     };
   }, []);
 

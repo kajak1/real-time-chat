@@ -6,6 +6,7 @@ import RoomsList from './desktop/RoomList';
 
 const Desktop = () => {
   const [userInfo] = useContext(UserContext);
+
   return (
     <>
       <header>
