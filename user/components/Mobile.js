@@ -42,7 +42,9 @@ const Mobile = () => {
         <CreateRoomForm></CreateRoomForm>
         <button>new message</button>
       </div>
-      {isChatOpened && <Chat></Chat>}
+      {isChatOpened && (
+        <Chat onPress={() => setIsChatOpened(!isChatOpened)}></Chat>
+      )}
     </>
   );
 };

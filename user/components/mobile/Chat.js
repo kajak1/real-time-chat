@@ -4,7 +4,7 @@ import socket from '../../utils/socketConfig';
 // eslint-disable-next-line
 import typingDelay, { typingTimeout } from '../../utils/typingDelay';
 
-const Chat = () => {
+const Chat = ({ onPress }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [typingUser, setTypingUser] = useState([]);
@@ -32,6 +32,9 @@ const Chat = () => {
 
   return (
     <div className='chat'>
+      <button className='exit-chat-button' onClick={onPress}>
+        X
+      </button>
       <div className='messages-cont'>
         <ul className='messages'>
           {messages.map(([username, msg], index) => (
