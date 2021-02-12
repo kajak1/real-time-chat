@@ -5,6 +5,7 @@ import Desktop from '../components/Desktop';
 import Mobile from '../components/Mobile';
 import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
+import resizeHanlder from '../utils/resizeHandler';
 
 const App = () => {
   // const username = prompt('name');
@@ -19,6 +20,10 @@ const App = () => {
 
   useEffect(() => {
     socket.emit('user login', { username });
+
+    window.addEventListener('resize', () => {
+      resizeHanlder();
+    });
   }, []);
 
   return (
