@@ -45,6 +45,7 @@ const Chat = () => {
         </ul>
       </div>
       <form
+        className='send-message-form'
         onSubmit={(e) => {
           e.preventDefault();
           if (message != '') {
