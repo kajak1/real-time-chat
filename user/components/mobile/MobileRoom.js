@@ -8,7 +8,7 @@ const MobileRoom = ({ roomName }) => {
   const [isChatOpened, setIsChatOpened] = useState(false);
 
   function handleJoinClick(roomName) {
-    if (roomName != 'global') {
+    if (userInfo.activeRoom != roomName) {
       setUserInfo({ username: userInfo.username, activeRoom: roomName });
       socket.emit('join room', {
         roomName: roomName,
