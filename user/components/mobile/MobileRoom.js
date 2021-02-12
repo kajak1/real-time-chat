@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../../utils/UserContext';
 import socket from '../../utils/socketConfig';
-import Chat from './Chat';
 
-const MobileRoom = ({ roomName }) => {
+const MobileRoom = ({ roomName, onPress }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
-  const [isChatOpened, setIsChatOpened] = useState(false);
 
   function handleJoinClick(roomName) {
     if (userInfo.activeRoom != roomName) {
@@ -25,19 +23,19 @@ const MobileRoom = ({ roomName }) => {
   return (
     <li>
       <button
-        className='join-room-button'
+        className='manage-room join-room-button'
         onClick={() => {
           handleJoinClick(roomName);
-          setIsChatOpened(!isChatOpened);
+          onPress();
+          // setIsChatOpened(!isChatOpened);
         }}>
         {roomName}
       </button>
       <button
-        className='delete-room-button'
+        className='manage-room delete-room-button'
         onClick={() => handleDeleteClick(roomName)}>
         Delete
       </button>
-      {isChatOpened && <Chat></Chat>}
     </li>
   );
 };

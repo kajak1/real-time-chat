@@ -3,10 +3,12 @@ import UserContext from '../utils/UserContext';
 import socket from '../utils/socketConfig';
 import MobileRoom from './mobile/MobileRoom';
 import CreateRoomForm from './CreateRoomForm';
+import Chat from './mobile/Chat';
 
 const Mobile = () => {
   const [userInfo] = useContext(UserContext);
   const [rooms, setRooms] = useState([]);
+  const [isChatOpened, setIsChatOpened] = useState(false);
 
   useEffect(() => {
     socket.on('startup', ({ rooms }) => {
@@ -30,12 +32,17 @@ const Mobile = () => {
       <div className='menu'>
         <ul className='room-list'>
           {rooms.map((roomName, index) => (
-            <MobileRoom roomName={roomName} key={index} />
+            <MobileRoom
+              roomName={roomName}
+              key={index}
+              onPress={() => setIsChatOpened(!isChatOpened)}
+            />
           ))}
         </ul>
         <CreateRoomForm></CreateRoomForm>
         <button>new message</button>
       </div>
+      {isChatOpened && <Chat></Chat>}
     </>
   );
 };
