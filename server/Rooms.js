@@ -35,13 +35,13 @@ module.exports = class Rooms {
 
   removeUserFromRoom(socketID, roomName) {
     // dodac warunek sprawdzający czy użytkownik istnieje w pokoju
+    // console.log(this[roomName], roomName);
     const userIndex = this[roomName].users.indexOf(socketID);
     this[roomName].users.splice(userIndex, 1);
   }
 
   getAllRooms() {
-    console.log(Object.getOwnPropertyNames(this));
-    console.log(this);
+    // console.log(Object.getOwnPropertyNames(this));
     return Object.getOwnPropertyNames(this);
   }
 };
