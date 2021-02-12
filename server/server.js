@@ -29,6 +29,14 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('get startup', ({ roomName = 'global' }) => {
+    socket.emit('startup', {
+      allMsg: rooms[roomName].messages,
+      users: rooms.global.users,
+      rooms: rooms.getAllRooms(),
+    });
+  });
+
   socket.on('user typing', ({ isTyping }) => {
     const username = users[socket.id].username;
     const activeRoom = users[socket.id].activeRoom;
@@ -38,7 +46,9 @@ io.on('connection', (socket) => {
   socket.on('chat update', ({ message }) => {
     const username = users[socket.id].username;
     const activeRoom = users[socket.id].activeRoom;
+    // console.log('gotit', activeRoom, socket.rooms);
     rooms.addMessage({ username, message }, activeRoom);
+
     io.to(activeRoom).emit('chat update', {
       allMsg: rooms[activeRoom].messages,
     });
@@ -51,20 +61,17 @@ io.on('connection', (socket) => {
     rooms.removeUserFromRoom(socket.id, activeRoomName);
     rooms.addUser(socket.id, roomName);
 
-    console.log(activeRoomName, rooms[activeRoomName].users);
-    console.log(roomName, rooms[roomName].users);
-
-    // to new room
+    // update users in new room
     socket.to(activeRoomName).broadcast.emit('users update', {
       users: rooms[activeRoomName].users,
     });
 
-    // to prev room
+    // update users in prev room
     socket.to(roomName).broadcast.emit('users update', {
       users: rooms[roomName].users,
     });
 
-    // get all info in new room
+    // get all info in new room and send it to client
     socket.emit('startup', {
       allMsg: rooms[roomName].messages,
       users: rooms[roomName].users,
@@ -83,11 +90,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
+    console.log(users[socket.id]);
     if (Object.keys(users).length != 0) {
       console.log(`${socket.id} disconnected`);
     }
+    rooms.removeUserFromRoom(socket.id, users[socket.id].activeRoom);
     users.remove(socket.id);
-    rooms.removeUserFromRoom(socket.id, 'global');
     io.emit('users update', { users: rooms.global.users });
   });
 });
