@@ -12,7 +12,6 @@ const Chat = ({ onPress }) => {
 
   useEffect(() => {
     socket.emit('get startup', { roomName: user.activeRoom });
-
     socket.on('chat update', ({ allMsg }) => {
       setMessages(allMsg);
     });
