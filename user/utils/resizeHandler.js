@@ -3,10 +3,10 @@ import socket from './socketConfig';
 function generateFunc() {
   let timer;
 
-  return (activeRoom) => {
+  return () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      socket.emit('get startup', { roomName: activeRoom });
+      socket.emit('get startup');
     }, 100);
   };
 }

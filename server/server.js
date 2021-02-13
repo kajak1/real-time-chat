@@ -29,10 +29,11 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('get startup', ({ roomName = 'global' }) => {
+  socket.on('get startup', () => {
+    const roomName = users[socket.id].activeRoom;
     socket.emit('startup', {
       allMsg: rooms[roomName].messages,
-      users: rooms.global.users,
+      users: rooms[roomName].users,
       rooms: rooms.getAllRooms(),
     });
   });
@@ -46,7 +47,6 @@ io.on('connection', (socket) => {
   socket.on('chat update', ({ message }) => {
     const username = users[socket.id].username;
     const activeRoom = users[socket.id].activeRoom;
-    // console.log('gotit', activeRoom, socket.rooms);
     rooms.addMessage({ username, message }, activeRoom);
 
     io.to(activeRoom).emit('chat update', {
@@ -90,7 +90,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(users[socket.id]);
     if (Object.keys(users).length != 0) {
       console.log(`${socket.id} disconnected`);
     }
