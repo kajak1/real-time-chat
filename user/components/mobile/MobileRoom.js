@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import UserContext from '../../utils/UserContext';
-import socket from '../../utils/socketConfig';
+import React, { useContext } from "react";
+import UserContext from "../../utils/UserContext";
+import socket from "../../utils/socketConfig";
 
 const MobileRoom = ({ roomName, onPress }) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
@@ -8,7 +8,7 @@ const MobileRoom = ({ roomName, onPress }) => {
   function handleJoinClick(roomName) {
     if (userInfo.activeRoom != roomName) {
       setUserInfo({ username: userInfo.username, activeRoom: roomName });
-      socket.emit('join room', {
+      socket.emit("join room", {
         roomName: roomName,
         activeRoomName: userInfo.activeRoom,
       });
@@ -16,23 +16,23 @@ const MobileRoom = ({ roomName, onPress }) => {
   }
 
   function handleDeleteClick(roomName) {
-    if (roomName === 'global') return;
-    socket.emit('delete room', { roomName: roomName });
+    if (roomName === "global") return;
+    socket.emit("delete room", { roomName: roomName });
   }
 
   return (
     <li>
+      <div className="room-image">{roomName[0].toUpperCase()}</div>
       <button
-        className='manage-room join-room-button'
+        className="manage-room join-room-button"
         onClick={() => {
           handleJoinClick(roomName);
           onPress();
-          // setIsChatOpened(!isChatOpened);
         }}>
         {roomName}
       </button>
       <button
-        className='manage-room delete-room-button'
+        className="manage-room delete-room-button"
         onClick={() => handleDeleteClick(roomName)}>
         Delete
       </button>

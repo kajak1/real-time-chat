@@ -1,79 +1,78 @@
-import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../../utils/UserContext';
-import socket from '../../utils/socketConfig';
+import React, { useState, useEffect, useContext } from "react";
+import UserContext from "../../utils/UserContext";
+import socket from "../../utils/socketConfig";
 // eslint-disable-next-line
-import typingDelay, { typingTimeout } from '../../utils/typingDelay';
+import typingDelay, { typingTimeout } from "../../utils/typingDelay";
+import ChatTopBar from "./ChatTopBar";
 
-const Chat = ({ onPress }) => {
+const Chat = (props) => {
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [typingUser, setTypingUser] = useState([]);
   const [user] = useContext(UserContext);
 
   useEffect(() => {
-    socket.emit('get startup', { roomName: user.activeRoom });
-    socket.on('chat update', ({ allMsg }) => {
+    socket.emit("get startup", { roomName: user.activeRoom });
+    socket.on("chat update", ({ allMsg }) => {
       setMessages(allMsg);
     });
-    socket.on('startup', ({ allMsg }) => {
+    socket.on("startup", ({ allMsg }) => {
       setMessages(allMsg);
     });
-    socket.on('user typing', ({ isTyping, username }) =>
+    socket.on("user typing", ({ isTyping, username }) =>
       setTypingUser([isTyping, username])
     );
 
     return () => {
-      socket.off('chat update');
-      socket.off('startup');
-      socket.off('user typing');
+      socket.off("chat update");
+      socket.off("startup");
+      socket.off("user typing");
     };
   }, []);
 
   return (
-    <div className='chat'>
-      <button className='exit-chat-button' onClick={onPress}>
-        X
-      </button>
-      <div className='messages-cont'>
-        <ul className='messages'>
+    <div className="chat">
+      <ChatTopBar {...props}></ChatTopBar>
+      <div className="messages-cont">
+        <ul className="messages">
           {messages.map(([username, msg], index) => (
             <li key={index}>
               {username}: {msg}
             </li>
           ))}
         </ul>
-        <ul className='typing-cont'>
+        <ul className="typing-cont">
           {typingUser[0] ? <li>{typingUser[1]}: is typing...</li> : <li></li>}
         </ul>
       </div>
       <form
-        className='send-message-form'
+        className="send-message-form"
         onSubmit={(e) => {
           e.preventDefault();
-          if (message != '') {
-            socket.emit('chat update', { message });
-            socket.emit('user typing', { isTyping: false });
-            setMessage('');
+          if (message != "") {
+            socket.emit("chat update", { message });
+            socket.emit("user typing", { isTyping: false });
+            setMessage("");
           }
         }}>
-        <label htmlFor='nickname'>nickname: </label>
+        <label htmlFor="nickname">nickname: </label>
         <input
-          name='nickname'
+          name="nickname"
           value={user.username}
-          id='n'
-          autoComplete='off'
+          id="n"
+          autoComplete="off"
           disabled
         />
-        <label htmlFor='message'>message: </label>
+        <label htmlFor="message">message: </label>
         <input
-          name='message'
-          id='m'
+          name="message"
+          id="m"
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
             typingDelay(4000);
           }}
-          autoComplete='off'
+          autoComplete="off"
         />
         <button>Send</button>
       </form>

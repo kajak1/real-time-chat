@@ -27,6 +27,7 @@
     "reach-router": "^0.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-responsive": "^8.2.0",
     "room": "^0.0.4",
     "socket.io": "^2.3.0",

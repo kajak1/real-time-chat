@@ -37,7 +37,9 @@ module.exports = class Rooms {
     // dodac warunek sprawdzający czy użytkownik istnieje w pokoju
     // console.log(this[roomName], roomName);
     const userIndex = this[roomName].users.indexOf(socketID);
-    this[roomName].users.splice(userIndex, 1);
+    if (userIndex != -1) {
+      this[roomName].users.splice(userIndex, 1);
+    }
   }
 
   getAllRooms() {

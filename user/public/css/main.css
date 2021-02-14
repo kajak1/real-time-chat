@@ -147,6 +147,7 @@ header {
         -ms-flex-align: center;
             align-items: center;
     position: fixed;
+    padding: 50px 0 0 0;
   }
   .menu {
     width: 100%;
@@ -158,17 +159,42 @@ header {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    overflow: scroll;
+  }
+  .menu .create-room-form {
+    position: static;
+  }
+  .menu .create-room-form .wrapper {
+    height: 2em;
+  }
+  .menu .create-room-form .wrapper input {
+    font-size: inherit;
+    height: inherit;
+  }
+  .menu .create-room-form button {
+    font-size: inherit;
+    height: 2em;
   }
   .menu .room-list {
     width: 100%;
-    height: 100%;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
   }
   .menu .room-list li {
     width: 100%;
     height: 3em;
     text-align: center;
     border: 1px solid black;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row;
+            flex-flow: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .menu .room-list li .manage-room {
     border: none;
@@ -176,10 +202,24 @@ header {
     height: 100%;
   }
   .menu .room-list li .manage-room.join-room-button {
-    width: 80%;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
   }
   .menu .room-list li .manage-room.delete-room-button {
-    width: 20%;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .menu .room-list li .room-image {
+    border-radius: 50%;
+    height: 2.5em;
+    width: 2.5em;
+    margin-left: 0.5em;
+    background: navy;
+    color: white;
+    text-align: center;
+    line-height: 2.5em;
   }
   .chat {
     position: absolute;
@@ -222,8 +262,48 @@ header {
     -webkit-box-flex: 0;
         -ms-flex: 0 1 auto;
             flex: 0 1 auto;
-    margin-bottom: 0.5em;
     width: 100%;
+  }
+  .chat .send-message-form button {
+    margin-top: 0.5em;
+    font-size: inherit;
+    height: 2em;
+  }
+  .chat .send-message-form input {
+    font-size: inherit;
+    height: 2em;
+  }
+  .chat nav {
+    height: 3em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .chat nav .go-back-button {
+    font-size: inherit;
+    height: 3em;
+    width: 3em;
+  }
+  .chat nav .room-name {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .chat nav .room-image {
+    border-radius: 50%;
+    height: 2.5em;
+    width: 2.5em;
+    background: navy;
+    margin: 0 0.5em;
+    color: white;
+    text-align: center;
+    line-height: 2.5em;
   }
 }
 /*# sourceMappingURL=main.css.map */

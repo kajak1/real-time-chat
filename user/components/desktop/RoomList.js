@@ -3,13 +3,12 @@ import socket from '../../utils/socketConfig';
 import CreateRoomForm from '../CreateRoomForm';
 import Room from './Room';
 
-const RoomDropdown = () => {
+const RoomList = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    // socket.emit('get startup', { roomName: user.activeRoom });
-
     socket.on('startup', ({ rooms }) => {
+      console.log('dostalem pokoje');
       setRooms(rooms);
     });
     socket.on('rooms update', ({ rooms }) => {
@@ -18,7 +17,7 @@ const RoomDropdown = () => {
 
     return () => {
       socket.off('startup');
-      socket.off('room update');
+      socket.off('rooms update');
     };
   }, []);
 
@@ -34,4 +33,4 @@ const RoomDropdown = () => {
   );
 };
 
-export default RoomDropdown;
+export default RoomList;

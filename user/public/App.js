@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import { render } from 'react-dom';
-import Desktop from '../components/Desktop';
-import Mobile from '../components/Mobile';
-import UserContext from '../utils/UserContext';
-import socket from '../utils/socketConfig';
-import resizeHanlder from '../utils/resizeHandler';
+import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
+import { render } from "react-dom";
+import Desktop from "../components/Desktop";
+import Mobile from "../components/Mobile";
+import UserContext from "../utils/UserContext";
+import socket from "../utils/socketConfig";
+import resizeHanlder from "../utils/resizeHandler";
 
 const App = () => {
-  // const username = prompt('name');
-  const username = 'imie';
-  const userHook = useState({ username: username, activeRoom: 'global' });
+  // const username = prompt("name");
+  const username = "imie";
+  const userHook = useState({ username: username, activeRoom: "global" });
 
   const isDesktop = useMediaQuery({
-    query: '(min-width: 1024px)',
+    query: "(min-width: 1024px)",
   });
 
-  const isMobile = useMediaQuery({ query: '(max-width: 425px)' });
+  const isMobile = useMediaQuery({ query: "(max-width: 425px)" });
 
   useEffect(() => {
-    socket.emit('user login', { username });
+    socket.emit("user login", { username });
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       resizeHanlder();
     });
   }, []);
@@ -34,4 +34,4 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+render(<App />, document.getElementById("root"));

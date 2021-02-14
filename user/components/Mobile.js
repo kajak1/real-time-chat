@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import UserContext from '../utils/UserContext';
-import socket from '../utils/socketConfig';
-import MobileRoom from './mobile/MobileRoom';
-import CreateRoomForm from './CreateRoomForm';
-import Chat from './mobile/Chat';
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../utils/UserContext";
+import socket from "../utils/socketConfig";
+import MobileRoom from "./mobile/MobileRoom";
+import CreateRoomForm from "./CreateRoomForm";
+import Chat from "./mobile/Chat";
 
 const Mobile = () => {
   const [userInfo] = useContext(UserContext);
@@ -11,16 +11,16 @@ const Mobile = () => {
   const [isChatOpened, setIsChatOpened] = useState(false);
 
   useEffect(() => {
-    socket.on('startup', ({ rooms }) => {
+    socket.on("startup", ({ rooms }) => {
       setRooms(rooms);
     });
-    socket.on('rooms update', ({ rooms }) => {
+    socket.on("rooms update", ({ rooms }) => {
       setRooms(rooms);
     });
 
     return () => {
-      socket.off('startup');
-      socket.off('room update');
+      socket.off("startup");
+      socket.off("room update");
     };
   }, []);
 
@@ -29,8 +29,8 @@ const Mobile = () => {
       <header>
         Hi, {userInfo.username}, you are in {userInfo.activeRoom}
       </header>
-      <div className='menu'>
-        <ul className='room-list'>
+      <div className="menu">
+        <ul className="room-list">
           {rooms.map((roomName, index) => (
             <MobileRoom
               roomName={roomName}
@@ -40,7 +40,6 @@ const Mobile = () => {
           ))}
         </ul>
         <CreateRoomForm></CreateRoomForm>
-        <button>new message</button>
       </div>
       {isChatOpened && (
         <Chat onPress={() => setIsChatOpened(!isChatOpened)}></Chat>
