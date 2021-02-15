@@ -1,0 +1,63 @@
+.menu {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .create-room-form {
+    position: static;
+
+    .wrapper {
+      height: 2em;
+
+      input {
+        font-size: inherit;
+        height: inherit;
+      }
+    }
+    button {
+      font-size: inherit;
+      height: 2em;
+    }
+  }
+
+  .room-list {
+    width: 100%;
+    flex: 1;
+
+    li {
+      width: 100%;
+      height: 3em;
+      text-align: center;
+      border: 1px solid black;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+
+      .manage-room {
+        border: none;
+        background: none;
+        height: 100%;
+
+        &.join-room-button {
+          flex: 1;
+        }
+
+        &.delete-room-button {
+          flex: 1;
+        }
+      }
+
+      .room-image {
+        border-radius: 50%;
+        height: 2.5em;
+        width: 2.5em;
+        margin-left: 0.5em;
+        background: navy;
+        color: white;
+        text-align: center;
+        line-height: 2.5em;
+      }
+    }
+  }
+}

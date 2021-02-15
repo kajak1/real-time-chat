@@ -1,0 +1,67 @@
+.chat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: tomato;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .exit-chat-button {
+    flex: 0 1 auto;
+  }
+
+  .messages-cont {
+    border: 1px solid black;
+    flex: 1 1 auto;
+  }
+
+  .send-message-form {
+    display: flex;
+    flex-flow: column;
+    flex: 0 1 auto;
+    width: 100%;
+
+    button {
+      margin-top: 0.5em;
+      font-size: inherit;
+      height: 2em;
+    }
+
+    input {
+      font-size: inherit;
+      height: 2em;
+    }
+  }
+
+  nav {
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .go-back-button {
+      font-size: inherit;
+      height: 3em;
+      width: 3em;
+    }
+
+    .room-name {
+      flex: 1;
+    }
+
+    .room-image {
+      border-radius: 50%;
+      height: 2.5em;
+      width: 2.5em;
+      background: navy;
+      margin: 0 0.5em;
+      color: white;
+      text-align: center;
+      line-height: 2.5em;
+    }
+  }
+}
